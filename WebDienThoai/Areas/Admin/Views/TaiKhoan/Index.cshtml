@@ -1,0 +1,65 @@
+﻿@model PagedList.IPagedList<Model.EF.TaiKhoan>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Quản trị viên</h2>
+<p>
+    <a href="/Admin/TaiKhoan/Create" class="btn btn-success">Thêm mới </a>
+    @*@Html.ActionLink("Create New", "Create",new { @class = "btn btn-success"})*@
+</p>
+
+@using (Html.BeginForm("Index", "TaiKhoan", FormMethod.Get))
+{
+    
+        <div class="input-group">
+            <input type="text" class="col-lg-4 form-control" style="width:400px;" name="searchString" value="@ViewBag.SearchString" placeholder="Tìm kiếm..." />
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    
+}
+
+
+
+<table class="table table-bordered mt-4">
+    <tr class="thead-dark">
+        <th>
+            Tài Khoản
+        </th>
+        <th>
+            Mật Khẩu
+        </th>
+        <th>Hành Động</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                <a href="/Admin/TaiKhoan/Edit/@item.ID" class="btn btn-warning">Sửa</a>
+                @*@Html.ActionLink("Sửa", "Edit", new { id = item.ID })*@
+                <a onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?')" href="/Admin/TaiKhoan/Delete/@item.ID" class="btn btn-danger">Xóa</a>
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+            </td>
+        </tr>
+    }
+
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+    </ul>
+</nav>

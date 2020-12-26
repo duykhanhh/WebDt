@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<Model.EF.NhaSanXuat>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Nhà sản xuất</h2>
+
+<p>
+    <a href="/Admin/NhaSanXuat/Create" class="btn btn-success">Thêm mới </a>
+</p>
+@using (Html.BeginForm("Index", "NhaSanXuat", FormMethod.Get))
+{
+
+    <div class="input-group">
+        <input type="text" class="col-lg-4 form-control" style="width:400px;" name="searchString" value="@ViewBag.SearchString" placeholder="Tìm kiếm..." />
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+
+}
+<table class="table table-bordered mt-4">
+    <tr class="thead-dark">
+        <th>
+            Tên Nhà sản xuất
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th>
+            Hành động
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNSX)
+            </td>
+            <td>
+                @(item.Status)
+            </td>
+            <td>
+                <a href="/Admin/NhaSanXuat/Edit/@item.ID" class="btn btn-warning">Sửa</a>
+                <a onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?')" href="/Admin/NhaSanXuat/Delete/@item.ID" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))

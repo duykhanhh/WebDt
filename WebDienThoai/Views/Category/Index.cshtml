@@ -1,0 +1,38 @@
+﻿@model List<Model.EF.SanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content_top">
+    <div class="heading">
+        <h3>New Products</h3>
+    </div>
+    <div class="see">
+        <p><a href="#">See all Products</a></p>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="section group">
+    @foreach (var item in Model)
+    {
+        <div class="grid_1_of_4 images_1_of_4">
+            <a href="/Product/Detail/@item.ID"><img src="@item.HinhAnh" style="width:224px;height:299px;" alt="" /></a>
+            <h2>@item.TenSP</h2>
+            <div class="price-details">
+                <div class="price-number">
+                    <p><span class="rupees">@(item.Gia.HasValue?item.Gia.Value.ToString("N0"):"Liên hệ")</span></p>
+                </div>
+                <div class="add-cart">
+                    <h4><a href="preview.html">Add to Cart</a></h4>
+                </div>
+                @*<div class="clear"></div>*@
+            </div>
+
+        </div>
+    }
+
+
+
+</div>
+

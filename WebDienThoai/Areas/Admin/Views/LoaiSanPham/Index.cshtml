@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Model.EF.LoaiSanPham>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Loại sản phẩm</h2>
+
+<p>
+    <a href="/Admin/LoaiSanPham/Create" class="btn btn-success">Thêm mới </a>
+</p>
+<table class="table table-bordered mt-4">
+    <tr class="thead-dark">
+        <th>
+            Tên Loại sản phẩm
+        </th>
+        <th>
+            Hành động
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenLSP)
+        </td>
+        <td>
+            <a href="/Admin/LoaiSanPham/Edit/@item.ID" class="btn btn-warning">Sửa</a>
+            <a onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?')" href="/Admin/LoaiSanPham/Delete/@item.ID" class="btn btn-danger">Xóa</a>
+        </td>
+    </tr>
+}
+
+</table>
