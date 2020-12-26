@@ -14,7 +14,7 @@ namespace WebDienThoai.Controllers
         {
 
             var model = new SanPhamDAO().ViewDetailByNSXID(id);
-            
+            // Tesst
             return View(model);
         }
     }
